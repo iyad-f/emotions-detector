@@ -44,18 +44,18 @@ class EmotionDetector:
     def wrap_text(
         text: str, max_width: int, font: int = cv2.FONT_HERSHEY_SIMPLEX, font_scale: float = 0.8, thickness: int = 2
     ) -> list[str]:
-        words = text.split()
         lines: list[str] = []
-        current_line = words[0]
-        for word in words[1:]:
-            test_line = f"{current_line} {word}"
-            text_size = cv2.getTextSize(test_line, font, font_scale, thickness)[0]
-            if text_size[0] <= max_width:
-                current_line = test_line
-            else:
-                lines.append(current_line)
-                current_line = word
-        lines.append(current_line)
+        if words := text.split():
+            current_line = words[0]
+            for word in words[1:]:
+                test_line = f"{current_line} {word}"
+                text_size = cv2.getTextSize(test_line, font, font_scale, thickness)[0]
+                if text_size[0] <= max_width:
+                    current_line = test_line
+                else:
+                    lines.append(current_line)
+                    current_line = word
+            lines.append(current_line)
 
         return lines
 
